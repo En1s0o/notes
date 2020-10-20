@@ -67,7 +67,7 @@
 
   vim /etc/samba/smb.conf
 
-  假设：samba 用户为 eniso，允许访问 /home/eniso 路径
+  假设：samba 用户为 root，允许访问 /root 路径
 
   ```
   [root]
