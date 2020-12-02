@@ -45,3 +45,32 @@ git config --global i18n.logoutputencoding utf-8
 set LESSCHARSET=utf-8
 ```
 
+
+
+## SVN 迁移至 Git
+
+- 账号对应
+
+  ```shell
+  svn log <repository> -q | awk -F '|' '/^r/ {sub("^ ", "", $2); sub(" $", "", $2); print $2"="$2" <"$2"@gmail.com>"}' | sort -u > ./svn2git.txt
+  ```
+
+  > 根据实际情况修改 `@gmail.com`。当生成的 svn2git.txt 不符合需求时，手动修改即可。
+
+- 拉取代码
+
+  ```shell
+  git svn clone <repository> --no-metadata --authors-file="./svn2git.txt" <directory>
+  ```
+
+  > 如果没有附带 `--authors-file` 参数，生成的 git commit 信息中，邮箱域名是一个 uuid。
+
+- 推送到 git 远程仓库
+
+  ```shell
+  git remote add origin <url>
+  git push -u origin master
+  ```
+
+
+
